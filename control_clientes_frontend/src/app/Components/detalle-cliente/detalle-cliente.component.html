@@ -1,0 +1,27 @@
+
+<div class="content" role="main">
+  <div *ngIf="selectedClient">
+  <div class="container mt-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Calle</th>
+          <th scope="col">Sector</th>
+          <th scope="col">Provincia</th>
+          <th scope="col">Pais</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let direcciones of selectedClient?.Direcciones">
+          <th scope="row">{{direcciones.Calle}}</th>
+          <td>{{direcciones.Sector}}</td>
+          <td>{{direcciones.Provincia}}</td>
+          <td>{{direcciones.Pais}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+</div>
+

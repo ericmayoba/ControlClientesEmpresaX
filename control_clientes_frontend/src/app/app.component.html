@@ -1,0 +1,78 @@
+
+<div class="content" role="main">
+
+  <h2 class="mb-4">Control de Clientes</h2>
+  <button class="btn btn-success" (click)="openCrearClienteModal()">
+    <i class="bi bi-person-plus"></i> Crear Cliente
+  </button>
+
+  <div class="text-end"></div>
+
+  <div class="container mt-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Email</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Otros datos</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientList">
+          <th scope="row">{{cliente.ClienteId}}</th>
+          <td>{{cliente.Nombre}}</td>
+          <td>{{cliente.Email}}</td>
+          <td>{{cliente.Telefono}}</td>
+          <td>{{cliente.OtrosDatos}}</td>
+          <td><button class="btn btn-primary" (click)="selectClient(cliente)">Direcciones</button></td>
+          <td><button class="btn btn-danger" (click)="deleteClient(cliente.ClienteId)">Eliminar</button></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade show d-block" tabindex="-1" *ngIf="selectedClient">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Direcciones de {{ selectedClient.Nombre }}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Usando el componente de detalle para mostrar las direcciones -->
+          <app-detalle-cliente [selectedClient]="selectedClient"></app-detalle-cliente>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para crear cliente -->
+<div class="modal fade" tabindex="-1" [ngClass]="{'d-block show': showCrearClienteModal}" *ngIf="showCrearClienteModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear Cliente</h5>
+        <button type="button" class="btn-close" (click)="closeCrearClienteModal()"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Componente de Crear Cliente -->
+        <app-crear-cliente (clienteGuardado)="onClienteGuardado()"></app-crear-cliente>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeCrearClienteModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

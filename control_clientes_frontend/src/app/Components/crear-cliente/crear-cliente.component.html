@@ -1,0 +1,63 @@
+<div class="container mt-4">
+  <form [formGroup]="clienteForm" (ngSubmit)="saveCliente()">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input id="nombre" type="text" class="form-control" formControlName="nombre">
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input id="email" type="email" class="form-control" formControlName="email">
+    </div>
+
+    <div class="mb-3">
+      <label for="telefono" class="form-label">Teléfono</label>
+      <input id="telefono" type="text" class="form-control" formControlName="telefono">
+    </div>
+
+    <div class="mb-3">
+      <label for="otrosDatos" class="form-label">Otros Datos</label>
+      <input id="otrosDatos" type="text" class="form-control" formControlName="otrosDatos">
+    </div>
+
+    <h4>Direcciones</h4>
+
+    <div formArrayName="direcciones">
+      <div *ngFor="let direccion of direcciones.controls; let i = index" [formGroupName]="i" class="card mb-3">
+        <div class="card-body">
+          <div class="mb-3">
+            <label for="calle-{{i}}" class="form-label">Calle</label>
+            <input id="calle-{{i}}" type="text" class="form-control" formControlName="calle">
+          </div>
+
+          <div class="mb-3">
+            <label for="sector-{{i}}" class="form-label">Sector</label>
+            <input id="sector-{{i}}" type="text" class="form-control" formControlName="sector">
+          </div>
+
+          <div class="mb-3">
+            <label for="provincia-{{i}}" class="form-label">Provincia</label>
+            <input id="provincia-{{i}}" type="text" class="form-control" formControlName="provincia">
+          </div>
+
+          <div class="mb-3">
+            <label for="pais-{{i}}" class="form-label">País</label>
+            <input id="pais-{{i}}" type="text" class="form-control" formControlName="pais">
+          </div>
+
+          <button type="button" class="btn btn-danger" (click)="removeDireccion(i)">
+            Eliminar dirección
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary mb-3" (click)="addDireccion()">
+      + Agregar Dirección
+    </button>
+
+    <div class="text-end">
+      <button type="submit" class="btn btn-success">Guardar Cliente</button>
+    </div>
+  </form>
+</div>
