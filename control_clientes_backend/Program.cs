@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", builder =>
@@ -26,13 +25,11 @@ builder.Services.AddDbContext<AppDbContext>(opt => {
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.PropertyNamingPolicy = null; // Keep original property names
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // Ignore reference loops
-        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull; // Optionally ignore nulls
+        options.JsonSerializerOptions.PropertyNamingPolicy = null; 
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; 
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull; 
     });
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -44,13 +41,10 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-    // Asegúrate de que la base de datos esté creada
     context.Database.EnsureCreated();
 
-    // Verifica si hay clientes en la base de datos
     if (!context.Clientes.Any())
     {
-        // Crea datos de ejemplo
         var clientes = new List<Cliente>
         {
             new Cliente
@@ -95,16 +89,11 @@ using (var scope = app.Services.CreateScope())
                 }
             }
         };
-
-        // Agrega los clientes y sus direcciones a la base de datos
         context.Clientes.AddRange(clientes);
-
-        // Guarda los cambios
         context.SaveChanges();
     }
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

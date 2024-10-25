@@ -92,28 +92,26 @@ namespace control_clientes_backend.Controllers
             {
                 return NotFound();
             }
-
-            // Actualiza las propiedades del cliente
             cliente.Nombre = clienteDto.Nombre;
             cliente.Email = clienteDto.Email;
             cliente.Telefono = clienteDto.Telefono;
             cliente.OtrosDatos = clienteDto.OtrosDatos;
 
-            // Limpia las direcciones existentes y agrega las nuevas
-            cliente.Direcciones.Clear(); // Limpia las direcciones existentes
+
+            cliente.Direcciones.Clear(); 
 
             foreach (var direccionDto in clienteDto.Direcciones)
             {
                 var direccion = new Direccion
                 {
-                    DireccionId = direccionDto.DireccionId, // Asegúrate de asignar un ID si es necesario
+                    DireccionId = direccionDto.DireccionId, 
                     ClienteId = cliente.ClienteId,
                     Calle = direccionDto.Calle,
                     Sector = direccionDto.Sector,
                     Provincia = direccionDto.Provincia,
                     Pais = direccionDto.Pais
                 };
-                cliente.Direcciones.Add(direccion); // Agrega la nueva dirección
+                cliente.Direcciones.Add(direccion); 
             }
 
             _context.Entry(cliente).State = EntityState.Modified;
@@ -152,13 +150,13 @@ namespace control_clientes_backend.Controllers
                     Sector = d.Sector,
                     Provincia = d.Provincia,
                     Pais = d.Pais
-                }).ToList() // Conversión de DireccionDto a Direccion
+                }).ToList() 
             };
 
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
 
-            clienteDto.ClienteId = cliente.ClienteId; // Establecer el ID generado
+            clienteDto.ClienteId = cliente.ClienteId; 
 
             return CreatedAtAction("GetCliente", new { id = cliente.ClienteId }, clienteDto);
         }
